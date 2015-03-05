@@ -37,7 +37,7 @@ assetic:
     debug:          "%kernel.debug%"
     use_controller: false
     bundles:        [ ]
-    #java: /usr/bin/java
+    java: /usr/bin/java
     filters:
         cssrewrite: ~
         #closure:
@@ -73,3 +73,9 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+#FOS USER BUNDLE
+fos_user:
+    db_driver: orm
+    firewall_name: secured_area
+    user-class: Caribbean\SecurityBundle\Entity\Usuario
