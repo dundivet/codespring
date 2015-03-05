@@ -1,5 +1,5 @@
 security:
-    resource: "@SecurityBundle/Controller/"
+    resource: "@CaribbeanSecurityBundle/Controller/"
     type:     annotation
     prefix:   /
 
