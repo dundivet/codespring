@@ -1,32 +1,21 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
+{% block content -%}
     <h1>Etiqueta</h1>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
+    <div class="table-responsive">
+        <table class="table table-condensed table-hover">
+            <tbody>
             <tr>
                 <th>Nombre</th>
                 <td>{{ entity.nombre }}</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('etiqueta') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('etiqueta_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <div role="group">
+        <a href="{{ path('etiqueta') }}" class="btn btn-default btn-md"><i class="fa fa-list"></i> Listado</a>
+        <a href="{{ path('etiqueta_edit', { 'id': entity.id }) }}" class="btn btn-primary btn-md"><i class="fa fa-edit"></i> Editar</a>
+    </div>
 {% endblock %}

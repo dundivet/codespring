@@ -25,16 +25,27 @@ class EtiquetaController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('TourismBundle:Etiqueta')->findAll();
+        $qb = $this->get('doctrine.orm.entity_manager')->createQueryBuilder();
 
-        return array(
-            'entities' => $entities,
+        $entities = $qb->select('d')
+            ->from('TourismBundle:Etiqueta', 'd');
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $entities,
+            $request->query->get('page', 1),
+            10
         );
+
+        return  $this->render('@Tourism/Etiqueta/index.html.twig', array(
+            'entities' => $pagination
+        ));
     }
+
     /**
      * Creates a new Etiqueta entity.
      *

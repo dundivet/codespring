@@ -1,15 +1,21 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
-    <h1>Etiqueta creation</h1>
+{% block content -%}
+    <h1>Crear nueva Etiqueta</h1>
 
-    {{ form(form) }}
+    {{ form_errors(form) }}
+    <form action="{{ form.vars.action }}" method="post" enctype="multipart/form-data">
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('etiqueta') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+        <div class="row">
+            <div class="col-md-12">
+                {{ form_row(form.nombre) }}
+            </div>
+        </div>
+
+        <div role="group">
+            <button type="submit" class="btn btn-success btn-md"><span class="glyphicon glyphicon-save"></span> Crear</button>
+            <a href="{{ path('etiqueta') }}" class="btn btn-default btn-md"><i class="fa fa-list"></i> Cancelar</a>
+        </div>
+        {{ form_widget(form._token) }}
+    </form>
 {% endblock %}
