@@ -48,81 +48,105 @@
 
 {% block body %}
     {% block navbar %}
-        <!-- No navbar included here to reduce dependencies, see https://github.com/phiamo/MopaBootstrapSandboxBundle/blob/master/Resources/views/base.html.twig for howto include it -->
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="input-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Search" style="min-width: 350px;">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                    </div>
+
+                </form>
+            </div>
+        </nav>
     {% endblock navbar %}
 
-{% block container %}
-{% block container_div_start %}<div class="{% block container_class %}container{% endblock container_class %}">{% endblock container_div_start %}
-    {% block header %}{% endblock header %}
+    {% block container %}
+        {% block container_div_start %}<div class="{% block container_class %}container{% endblock container_class %}">{% endblock container_div_start %}
+        {% block header %}{% endblock header %}
 
-{% block content_div_start %}<div class="content">{% endblock content_div_start %}
-    {% block page_header %}
-        {#<div class="page-header">#}
-            {#<h1>{% block headline %}{% endblock headline %}</h1>#}
-        {#</div>#}
-    {% endblock page_header %}
+        {% block content_div_start %}<div class="content">{% endblock content_div_start %}
+        {% block page_header %}
+            {#<div class="page-header">#}
+                {#<h1>{% block headline %}{% endblock headline %}</h1>#}
+            {#</div>#}
+        {% endblock page_header %}
 
-    {# Session flashes #}
-    {% block flashes %}
-        <div class="row">
-            <div class="col-sm-12 global-messages">
-                {% if app.session.flashbag.peekAll|length > 0 %}
-                    {{ session_flash() }}
-                {% endif %}
+        {# Session flashes #}
+        {% block flashes %}
+            <div class="row">
+                <div class="col-sm-12 global-messages">
+                    {% if app.session.flashbag.peekAll|length > 0 %}
+                        {{ session_flash() }}
+                    {% endif %}
+                </div>
             </div>
+        {% endblock flashes %}
+
+        {% block content_row %}
+            {% block content %}
+            {% endblock content %}
+        {% endblock content_row %}
+        {% block content_div_end %}
         </div>
-    {% endblock flashes %}
+        {% endblock content_div_end %}
+        {#{% block footer_tag_start %}#}
+            {#<footer>#}
+        {#{% endblock footer_tag_start %}#}
+            {#{% block footer %}#}
+                {#{#<p>&copy; <a href="http://www.mohrenweiserpartner.de" target="_blank">Mohrenweiser & Partner</a> 2011-2013</p>#}
+            {#{% endblock footer %}#}
+        {#{% block footer_tag_end %}#}
+            {#</footer>#}
+        {#{% endblock footer_tag_end %}#}
 
-    {% block content_row %}
-        {% block content %}
-        {% endblock content %}
-    {% endblock content_row %}
-{% block content_div_end %}</div>{% endblock content_div_end %}
+        {% block container_div_end %}</div><!-- /container -->{% endblock container_div_end %}
+    {% endblock container %}
 
-{% block footer_tag_start %}
-    <footer>
-{% endblock footer_tag_start %}
-    {% block footer %}
-        {#<p>&copy; <a href="http://www.mohrenweiserpartner.de" target="_blank">Mohrenweiser & Partner</a> 2011-2013</p>#}
-    {% endblock footer %}
-{% block footer_tag_end %}
-    </footer>
-{% endblock footer_tag_end %}
+    {% block foot_script %}
+        {# To only use a subset or add more js overwrite and copy paste this block
+        To speed up page loads save a copy of jQuery in your project and override this block to include the correct path
+        Otherwise the regeneration is done on every load in dev more with use_controller: true#}
+    {% block foot_script_assetic %}
+        {% javascripts filter="yui_js" output='js/main.js'
+        '@TourismBundle/Resources/public/vendors/jquery-1.11.2.min.js'
+        '@TourismBundle/Resources/public/vendors/bootstrap-3.3.2/js/bootstrap.js'
+        '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/js/picker.js'
+        '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/js/picker.date.js'
+        '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/js/picker.time.js'
+        '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/js/legacy.js'
+        '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/translations/es_ES.js'
+        '@TourismBundle/Resources/public/vendors/jquery-form-3.51/jquery.form.js'
+        '@TourismBundle/Resources/public/vendors/slidebars-0.10.2/slidebars.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js?key=AIzaSyAU7KiC0wkIUEqYfvAULpM0sO1ataV4wbg') }}" type="text/javascript"></script>
+        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}" type="text/javascript"></script>
+        <script src="http://maps.googleapis.com/maps/api/js"></script>
+    {% endblock foot_script_assetic %}
 
-{% block container_div_end %}</div><!-- /container -->{% endblock container_div_end %}
-{% endblock container %}
+        <script type="text/javascript">
+    //        (function($) {
+    //            $(document).ready(function() {
+    //                var mySlidebars = new $.slidebars();
+    //                console.log(mySlidebars);
+    //            });
+    //        }) (jQuery);
+            $(document).ready(function () {
+    //            $('[data-toggle="tooltip"]').tooltip();
+    //            $('[data-toggle="popover"]').popover();
+                $('form[role="search"]').find('input').on('click', function() {
+                    $(this).animate({'min-width':'800px'});
+                });
+                $('form[role="search"]').find('input').on('blur', function() {
+                    $(this).animate({'min-width':'350px'});
+                });
+            });
 
-{% block foot_script %}
-    {# To only use a subset or add more js overwrite and copy paste this block
-    To speed up page loads save a copy of jQuery in your project and override this block to include the correct path
-    Otherwise the regeneration is done on every load in dev more with use_controller: true
-     #}
-{% block foot_script_assetic %}
-    {% javascripts filter="yui_js" output='js/main.js'
-    '@TourismBundle/Resources/public/vendors/jquery-1.11.2.min.js'
-    '@TourismBundle/Resources/public/vendors/bootstrap-3.3.2/js/bootstrap.js'
-    '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/js/picker.js'
-    '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/js/picker.date.js'
-    '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/js/picker.time.js'
-    '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/js/legacy.js'
-    '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/translations/es_ES.js'
-    '@TourismBundle/Resources/public/vendors/jquery-form-3.51/jquery.form.js'
-    %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-    <script src="{{ asset('bundles/fosjsrouting/js/router.js?key=AIzaSyAU7KiC0wkIUEqYfvAULpM0sO1ataV4wbg') }}" type="text/javascript"></script>
-    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}" type="text/javascript"></script>
-    <script src="http://maps.googleapis.com/maps/api/js"></script>
-{% endblock foot_script_assetic %}
-
-    {#<script type="text/javascript">
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-            $('[data-toggle="popover"]').popover();
-        });
-    </script>#}
-    {% block javascripts %}{% endblock javascripts %}
-{% endblock foot_script %}
+        </script>
+        {% block javascripts %}{% endblock javascripts %}
+    {% endblock foot_script %}
 
     {% block body_end %}{% endblock body_end %}
 

@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-lg-12" id="googleMap" style="width:500px;height:380px;">
+        <div class="col-lg-12" id="googleMap" style="height:380px;">
         </div>
     </div>
 {% endblock content %}
@@ -11,32 +11,53 @@
     <script type="text/javascript">
         $(document).ready(function() {
             google.maps.event.addDomListener(window, 'load', initialize);
+
+            $('form[role="search"]').on('submit', function(event){
+                event.preventDefault();
+                //markers.addMarker(markers.getLatLng(18.1240011,-77.3144547));
+            });
+
         });
+        var map = {
+            object: undefined
+        };
+        var markers = {
+            getLatLng: function(x,y){
+                return new google.maps.LatLng(x,y);
+            },
+            addMarker: function (location) {
+                var marker = new google.maps.Marker({
+                    position: location,
+                    map: map.object
+                });
+            }
+        };
 
         function initialize() {
             var mapProp = {
-                center:new google.maps.LatLng(51.508742,-0.120850),
-                zoom:5,
+                center:new google.maps.LatLng(18.1240011,-77.3144547),
+                zoom:10,
                 mapTypeId:google.maps.MapTypeId.ROADMAP
             };
-            var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+            map.object = new google.maps.Map(document.getElementById("googleMap"),mapProp);
 
-            placeMarker(new google.maps.LatLng(51.508742,-0.120850));
-            google.maps.event.addListener(marker, 'click', toggleBounce);
+//            placeMarker(new google.maps.LatLng(51.508742,-0.120850));
+//            google.maps.event.addListener(marker, 'click', toggleBounce);
 
-            marker.setMap(map);
+//            marker.setMap(map);
+
         }
 
-        function placeMarker(location) {
-            var marker = new google.maps.Marker({
-                position: location,
-                map: map,
-            });
-            var infowindow = new google.maps.InfoWindow({
-                content: 'Latitude: ' + location.lat() +
-                '<br>Longitude: ' + location.lng()
-            });
-            infowindow.open(map, marker);
-        }
+//        function placeMarker(location) {
+//            var marker = new google.maps.Marker({
+//                position: location,
+//                map: map,
+//            });
+//            var infowindow = new google.maps.InfoWindow({
+//                content: 'Latitude: ' + location.lat() +
+//                '<br>Longitude: ' + location.lng()
+//            });
+//            infowindow.open(map, marker);
+//        }
     </script>
 {% endblock javascripts %}
