@@ -45,12 +45,11 @@ class RandomImagesCommand extends ContainerAwareCommand {
             for ($i = 0; $i < 4; $i++) {
                 $imagen = new Imagen();
                 $imagen->setRuta($fotoNames[rand(0, count($fotoNames) - 1)]);
-                $punto->addGalerium($imagen);
+                $imagen->setPoi($punto);
 
-                $em->persist($punto);
-                $em->flush();
-                $em->clear();
+                $em->persist($imagen);
             }
+            $em->flush();
         }
     }
 }

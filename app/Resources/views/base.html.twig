@@ -16,6 +16,7 @@
             '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/themes/default.date.css'
             '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/themes/default.time.css'
             '@TourismBundle/Resources/public/vendors/font-awesome-4.3.0/css/font-awesome.css'
+            '@TourismBundle/Resources/public/vendors/fullPage.js/jquery.fullPage.css'
             '@TourismBundle/Resources/public/css/base.css'
             %}
             <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
@@ -41,28 +42,35 @@
 
 {# Body #}
 {% block body_tag %}
-<body data-spy="scroll">
+<body data-spy="scroll" style="padding-top: 70px;">
 {% endblock body_tag %}
 
 {% block body_start %}{% endblock body_start %}
 
 {% block body %}
     {% block navbar %}
-        <nav class="navbar navbar-default" role="navigation">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <form class="navbar-form navbar-left" role="search">
                     <div class="input-group has-feedback">
                         <input type="text" name="search" class="form-control" placeholder="Search" style="min-width: 350px;">
                         <span class="glyphicon glyphicon-search form-control-feedback"></span>
                     </div>
-
                 </form>
+                <ul class="nav navbar-nav">
+                    {#<li><a href="#" onclick="$('html, body').animate({ scrollTop: 0}, 1000);">Google Map <span class="sr-only">(current)</span></a></li>#}
+                    {#<li><a href="#" onclick="$('html, body').animate({ scrollTop: $(document).height()-$(window).height() } , 1000);">Destacadas</a></li>#}
+                    <li><a href="{{ path('poi') }}">Puntos de Interés</a></li>
+                </ul>
+                <ul class="nav navbar-nav pull-right">
+                    <li><a href="{{ path('tourism_homepage') }}">Volver</a></li>
+                </ul>
             </div>
         </nav>
     {% endblock navbar %}
 
     {% block container %}
-        {% block container_div_start %}<div class="{% block container_class %}container{% endblock container_class %}">{% endblock container_div_start %}
+        {% block container_div_start %}<div class="{% block container_class %}container{% endblock container_class %}" >{% endblock container_div_start %}
         {% block header %}{% endblock header %}
 
         {% block content_div_start %}<div class="content">{% endblock content_div_start %}
@@ -120,6 +128,9 @@
         '@TourismBundle/Resources/public/vendors/slidebars-0.10.2/slidebars.js'
         '@TourismBundle/Resources/public/vendors/markerclusterer/markerclusterer.js'
         '@TourismBundle/Resources/public/vendors/infobubble/infobubble.js'
+        '@TourismBundle/Resources/public/vendors/image-slider/js/jssor.js'
+        '@TourismBundle/Resources/public/vendors/image-slider/js/jssor.slider.js'
+        '@TourismBundle/Resources/public/vendors/fullPage.js/jquery.fullPage.js'
         '@TourismBundle/Resources/public/js/string_utils.js'
         %}
         <script type="text/javascript" src="{{ asset_url }}"></script>

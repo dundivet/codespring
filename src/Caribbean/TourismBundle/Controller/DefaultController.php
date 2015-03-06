@@ -5,6 +5,7 @@ namespace Caribbean\TourismBundle\Controller;
 use Caribbean\TourismBundle\Entity\POI;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,7 +20,21 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('TourismBundle:Default:index.html.twig', array());
+        $finder = Finder::create();
+        $fotos = $finder
+            ->files()
+            ->name('*.jpg')
+            ->size('>140000')
+            ->in(__DIR__.'/../../../../web/uploads');
+
+        $fotoNames = array();
+        foreach($fotos as $foto) {
+            $fotoNames[] = $foto->getFilename();
+        }
+
+        return $this->render('TourismBundle:Default:index.html.twig', array(
+            'images' => $fotoNames,
+        ));
     }
 
     /**

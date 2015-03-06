@@ -18,7 +18,7 @@ class POIRepository extends EntityRepository
         $qb = $this->createQueryBuilder('r');
 
         if($criteria) {
-            $qb->andWhere($qb->expr()->like('r.nombre',':nombre'))
+            $qb->andWhere($qb->expr()->like('r.nombre','UPPER(:nombre)'))
                 ->setParameter('nombre', '%'.$criteria.'%');
         }
 

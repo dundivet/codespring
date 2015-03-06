@@ -1,4 +1,9 @@
 <div>
     <h4>{{ entity.nombre }}</h4>
-    <p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, commodi consequatur error est et natus qui sit? Adipisci architecto beatae dolores facilis harum, impedit, nemo, nihil repudiandae sit ut vero?</p>
+    {% if entity.galeria.get(0) is not null %}
+        <img style="width: 54px; height: auto;" src="{{ asset('uploads/' ~ entity.galeria.get(0).ruta) }}" alt=""/>
+    {% endif %}
+    <p style="text-align: justify;">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, commodi consequatur error est et natus qui sit? Adipisci architecto beatae dolores facilis harum, impedit, nemo, nihil repudiandae sit ut vero?
+    </p>
 </div>
