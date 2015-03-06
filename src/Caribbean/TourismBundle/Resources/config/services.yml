@@ -1,0 +1,3 @@
+services:
+  tourism.poi.manager:
+    class: Caribbean\TourismBundle\Managers\POIManager

@@ -1,11 +1,9 @@
 {% extends '::base.html.twig' %}
 
-{% block content %}
-    <div class="row">
-        <div class="col-lg-12" id="googleMap" style="height:380px;">
-        </div>
+{% block container %}
+    <div class="" id="googleMap" style="top:-20px;height:460px;">
     </div>
-{% endblock content %}
+{% endblock %}
 
 {% block javascripts %}
     <script type="text/javascript">
@@ -15,21 +13,76 @@
             $('form[role="search"]').on('submit', function(event){
                 event.preventDefault();
                 //markers.addMarker(markers.getLatLng(18.1240011,-77.3144547));
+                markers.deleteOverlays();
+
+                formData = $(this).serializeArray();
+
+                find(formData);
             });
 
+            find();
         });
+
+        function find(data) {
+            $.ajax({
+                url: Routing.generate('tourism_markers_data'),
+                dataType: 'json',
+                method: 'get',
+                data: data
+            }).done(function(response, statusText, jqXHR){
+                var pois = response;
+
+                markers.arrayMarkers = [];
+
+                $.each(pois, function(key, value){
+                    var marker = markers.addMarker(value);
+
+                    google.maps.event.addListener(marker, 'click', function() {
+                        var infowindow = new InfoBubble({
+                            content: this.poi_popover,
+                            maxWidth: 500
+                        });
+
+                        infowindow.open(map.object, this);
+                    });
+                });
+
+                markers.markerCluster = new MarkerClusterer(map.object, markers.arrayMarkers);
+            });
+        }
+
         var map = {
             object: undefined
         };
         var markers = {
-            getLatLng: function(x,y){
-                return new google.maps.LatLng(x,y);
+            arrayMarkers: [],
+            markerCluster: undefined,
+            getLatLng: function(lat, lng){
+                return new google.maps.LatLng(lat, lng);
             },
-            addMarker: function (location) {
+            addMarker: function (object) {
                 var marker = new google.maps.Marker({
-                    position: location,
-                    map: map.object
+                    position: markers.getLatLng(object.lat, object.lng),
+                    title: object.nombre,
+                    poi_id: object.id,
+                    poi_nombre: object.nombre,
+                    poi_popover: object.popover
                 });
+
+                markers.arrayMarkers.push(marker);
+
+                return marker;
+            },
+            deleteOverlays: function() {
+                if (markers.arrayMarkers) {
+                    for (i in markers.arrayMarkers) {
+                        markers.arrayMarkers[i].setMap(null);
+                    }
+                    markers.arrayMarkers.length = 0;
+                }
+                if (markers.markerCluster) {
+                    markers.markerCluster.clearMarkers();
+                }
             }
         };
 
