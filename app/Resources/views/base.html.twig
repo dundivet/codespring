@@ -1,13 +1,131 @@
+{% from '::flash.html.twig' import session_flash %}
+
 <!DOCTYPE html>
-<html>
+{% block html_tag %}
+<html lang="es_ES">
+{% endblock html_tag %}
+
+{% block head %}
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {# Stylesheets #}
+        {% block head_style %}
+            {% stylesheets filter="yui_css" output='css/main.css'
+            '@TourismBundle/Resources/public/vendors/bootstrap-3.3.2/css/bootstrap.css'
+            '@TourismBundle/Resources/public/vendors/bootstrap-3.3.2/css/bootstrap-theme.css'
+            '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/themes/default.css'
+            '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/themes/default.date.css'
+            '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/themes/default.time.css'
+            '@TourismBundle/Resources/public/vendors/font-awesome-4.3.0/css/font-awesome.min.css'
+            '@TourismBundle/Resources/public/css/base.css'
+            %}
+            <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+            {% endstylesheets %}
+        {% endblock head_style %}
+
+        {% block meta_viewport %}
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% endblock meta_viewport %}
+
+        {% block head_script %}
+            {# if you need less compiler uncomment next block #}
+            {# <script src="{{ asset('bundles/olimpiadatemplate/vendor/less/less-1.7.0.min.js') }}" type="text/javascript"></script> #}
+        {% endblock head_script %}
+
+        <title>{% block title %}Caribbean Tourism Map{% endblock %}</title>
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        {% block head_bottom %}{% endblock head_bottom %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+{% endblock head %}
+
+{# Body #}
+{% block body_tag %}
+<body data-spy="scroll">
+{% endblock body_tag %}
+
+{% block body_start %}{% endblock body_start %}
+
+{% block body %}
+    {% block navbar %}
+        <!-- No navbar included here to reduce dependencies, see https://github.com/phiamo/MopaBootstrapSandboxBundle/blob/master/Resources/views/base.html.twig for howto include it -->
+    {% endblock navbar %}
+
+{% block container %}
+{% block container_div_start %}<div class="{% block container_class %}container{% endblock container_class %}">{% endblock container_div_start %}
+    {% block header %}{% endblock header %}
+
+{% block content_div_start %}<div class="content">{% endblock content_div_start %}
+    {% block page_header %}
+        {#<div class="page-header">#}
+            {#<h1>{% block headline %}{% endblock headline %}</h1>#}
+        {#</div>#}
+    {% endblock page_header %}
+
+    {# Session flashes #}
+    {% block flashes %}
+        <div class="row">
+            <div class="col-sm-12 global-messages">
+                {% if app.session.flashbag.peekAll|length > 0 %}
+                    {{ session_flash() }}
+                {% endif %}
+            </div>
+        </div>
+    {% endblock flashes %}
+
+    {% block content_row %}
+        {% block content %}
+        {% endblock content %}
+    {% endblock content_row %}
+{% block content_div_end %}</div>{% endblock content_div_end %}
+
+{% block footer_tag_start %}
+    <footer>
+{% endblock footer_tag_start %}
+    {% block footer %}
+        {#<p>&copy; <a href="http://www.mohrenweiserpartner.de" target="_blank">Mohrenweiser & Partner</a> 2011-2013</p>#}
+    {% endblock footer %}
+{% block footer_tag_end %}
+    </footer>
+{% endblock footer_tag_end %}
+
+{% block container_div_end %}</div><!-- /container -->{% endblock container_div_end %}
+{% endblock container %}
+
+{% block foot_script %}
+    {# To only use a subset or add more js overwrite and copy paste this block
+    To speed up page loads save a copy of jQuery in your project and override this block to include the correct path
+    Otherwise the regeneration is done on every load in dev more with use_controller: true
+     #}
+{% block foot_script_assetic %}
+    {% javascripts filter="yui_js" output='js/main.js'
+    '@TourismBundle/Resources/public/vendors/jquery-1.11.2.min.js'
+    '@TourismBundle/Resources/public/vendors/bootstrap-3.3.2/js/bootstrap.js'
+    '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/js/picker.js'
+    '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/js/picker.date.js'
+    '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/js/picker.time.js'
+    '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/js/legacy.js'
+    '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/translations/es_ES.js'
+    '@TourismBundle/Resources/public/vendors/jquery-form-3.51/jquery.form.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}" type="text/javascript"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}" type="text/javascript"></script>
+{% endblock foot_script_assetic %}
+
+    {#<script type="text/javascript">
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>#}
+    {% block javascripts %}{% endblock javascripts %}
+{% endblock foot_script %}
+
+    {% block body_end %}{% endblock body_end %}
+
+{% endblock body %}
+</body>
 </html>

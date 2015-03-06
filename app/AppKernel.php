@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Caribbean\TourismBundle\TourismBundle(),
             new Caribbean\SecurityBundle\CaribbeanSecurityBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
