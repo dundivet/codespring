@@ -1,9 +1,11 @@
-security:
-    resource: "@CaribbeanSecurityBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-tourism:
+tourism_routing:
     resource: "@TourismBundle/Controller/"
     type:     annotation
     prefix:   /
+
+security_routing:
+    resource: "@CaribbeanSecurityBundle/Resources/config/routing.yml"
+
+# friendofsymfony js routing bundle
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

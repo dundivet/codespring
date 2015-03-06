@@ -1,1 +1,42 @@
-Hello {{ name }}!
+{% extends '::base.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12" id="googleMap" style="width:500px;height:380px;">
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            google.maps.event.addDomListener(window, 'load', initialize);
+        });
+
+        function initialize() {
+            var mapProp = {
+                center:new google.maps.LatLng(51.508742,-0.120850),
+                zoom:5,
+                mapTypeId:google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+            placeMarker(new google.maps.LatLng(51.508742,-0.120850));
+            google.maps.event.addListener(marker, 'click', toggleBounce);
+
+            marker.setMap(map);
+        }
+
+        function placeMarker(location) {
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map,
+            });
+            var infowindow = new google.maps.InfoWindow({
+                content: 'Latitude: ' + location.lat() +
+                '<br>Longitude: ' + location.lng()
+            });
+            infowindow.open(map, marker);
+        }
+    </script>
+{% endblock javascripts %}

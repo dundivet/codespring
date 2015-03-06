@@ -11,8 +11,7 @@
         {# Stylesheets #}
         {% block head_style %}
             {% stylesheets filter="yui_css" output='css/main.css'
-            '@TourismBundle/Resources/public/vendors/bootstrap-3.3.2/css/bootstrap.css'
-            '@TourismBundle/Resources/public/vendors/bootstrap-3.3.2/css/bootstrap-theme.css'
+            '@TourismBundle/Resources/public/vendors/bootstrap-theme-cosmo/bootstrap.css'
             '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/themes/default.css'
             '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/themes/default.date.css'
             '@TourismBundle/Resources/public/vendors/pickadate-3.5.5/themes/default.time.css'
@@ -111,8 +110,9 @@
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js?key=AIzaSyAU7KiC0wkIUEqYfvAULpM0sO1ataV4wbg') }}" type="text/javascript"></script>
     <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}" type="text/javascript"></script>
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
 {% endblock foot_script_assetic %}
 
     {#<script type="text/javascript">
