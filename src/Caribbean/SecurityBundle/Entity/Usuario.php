@@ -43,6 +43,22 @@ class Usuario extends BaseUser
     protected  $comentarios;
 
     /**
+     * @var \Caribbean\TourismBundle\Entity\Rating
+     *
+     * @ORM\ManyToOne(targetEntity="Caribbean\TourismBundle\Entity\Rating", inversedBy="usuario")
+     */
+    protected $rating;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comentarios = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -60,5 +76,84 @@ class Usuario extends BaseUser
     public function setActive($value)
     {
         $this->locked = !$value;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     * @return Usuario
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Add comentarios
+     *
+     * @param \Caribbean\TourismBundle\Entity\Comentario $comentarios
+     * @return Usuario
+     */
+    public function addComentario(\Caribbean\TourismBundle\Entity\Comentario $comentarios)
+    {
+        $this->comentarios[] = $comentarios;
+
+        return $this;
+    }
+
+    /**
+     * Remove comentarios
+     *
+     * @param \Caribbean\TourismBundle\Entity\Comentario $comentarios
+     */
+    public function removeComentario(\Caribbean\TourismBundle\Entity\Comentario $comentarios)
+    {
+        $this->comentarios->removeElement($comentarios);
+    }
+
+    /**
+     * Get comentarios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComentarios()
+    {
+        return $this->comentarios;
+    }
+
+    /**
+     * Set rating
+     *
+     * @param \Caribbean\TourismBundle\Entity\Rating $rating
+     * @return Usuario
+     */
+    public function setRating(\Caribbean\TourismBundle\Entity\Rating $rating = null)
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+    /**
+     * Get rating
+     *
+     * @return \Caribbean\TourismBundle\Entity\Rating 
+     */
+    public function getRating()
+    {
+        return $this->rating;
     }
 }

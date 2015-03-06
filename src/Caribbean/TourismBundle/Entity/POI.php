@@ -47,6 +47,13 @@ class POI
     /**
      * @var string
      *
+     * @ORM\Column(name="contacto", type="string", length=50, nullable=true)
+     */
+    private $contacto;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="ciudad", type="string", length=50, nullable=true)
      */
     private $ciudad;
@@ -80,6 +87,13 @@ class POI
      * @ORM\OneToMany(targetEntity="Caribbean\TourismBundle\Entity\Comentario", mappedBy="poi")
      */
     private $comentarios;
+
+    /**
+     * @var \Caribbean\TourismBundle\Entity\Rating
+     *
+     * @ORM\ManyToOne(targetEntity="Caribbean\TourismBundle\Entity\Rating", inversedBy="poi")
+     */
+    private $rating;
 
 
     /**
@@ -293,5 +307,51 @@ class POI
     public function getComentarios()
     {
         return $this->comentarios;
+    }
+
+    /**
+     * Set contacto
+     *
+     * @param string $contacto
+     * @return POI
+     */
+    public function setContacto($contacto)
+    {
+        $this->contacto = $contacto;
+
+        return $this;
+    }
+
+    /**
+     * Get contacto
+     *
+     * @return string 
+     */
+    public function getContacto()
+    {
+        return $this->contacto;
+    }
+
+    /**
+     * Set rating
+     *
+     * @param \Caribbean\TourismBundle\Entity\Rating $rating
+     * @return POI
+     */
+    public function setRating(\Caribbean\TourismBundle\Entity\Rating $rating = null)
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+    /**
+     * Get rating
+     *
+     * @return \Caribbean\TourismBundle\Entity\Rating 
+     */
+    public function getRating()
+    {
+        return $this->rating;
     }
 }

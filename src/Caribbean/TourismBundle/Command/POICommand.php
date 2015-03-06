@@ -28,32 +28,47 @@ class POICommand extends ContainerAwareCommand {
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $file = $input->getArgument('file');
         $indexRow = $input->getArgument('index-row');
+
         $columns = array(
-            'A' => 'nombre',
-            'B' => 'direccion',
-            'C' => 'ciudad',
-            'E' => 'latitud',
-            'F' => 'longitud'
+            'B' => 'nombre',
+            'E' => 'direccion',
+            'F' => 'ciudad',
+            'H' => 'contacto',
+            'J' => 'latitud',
+            'K' => 'longitud'
         );
+
+        $notNull = array('B', 'J', 'K');
 
         if ($file) {
             $objPHPExcel = $this->read($file);
 
             if ($objPHPExcel) {
+                $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+
                 $sheet = $objPHPExcel->setActiveSheetIndex(0);
                 $highestRow = $sheet->getHighestRow();
 
                 for ($i = $indexRow; $i < $highestRow; $i++) {
                     $poi = new POI();
+                    $flag = true;
                     foreach ($columns as $key => $value) {
                         $cell = $sheet->getCell($key.$i)->getValue();
+
+                        if (in_array($key, $notNull) && empty($cell)) {
+                            $flag = false;
+                            break;
+                        }
+
                         $set = sprintf('set%s', ucfirst($value));
                         $poi->$set($cell);
                     }
-                    $em->persist($poi);
+
+                    if ($flag) {
+                        $em->persist($poi);
+                    }
                 }
                 $em->flush();
 
