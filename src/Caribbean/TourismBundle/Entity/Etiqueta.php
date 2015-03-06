@@ -28,6 +28,21 @@ class Etiqueta
      */
     private $nombre;
 
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Caribbean\TourismBundle\Entity\POI", mappedBy="etiqueta")
+     */
+    private $pois;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pois = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -60,5 +75,38 @@ class Etiqueta
     public function getNombre()
     {
         return $this->nombre;
+    }
+
+    /**
+     * Add poi
+     *
+     * @param \Caribbean\TourismBundle\Entity\POI $poi
+     * @return Etiqueta
+     */
+    public function addPoi(\Caribbean\TourismBundle\Entity\POI $poi)
+    {
+        $this->pois[] = $poi;
+
+        return $this;
+    }
+
+    /**
+     * Remove poi
+     *
+     * @param \Caribbean\TourismBundle\Entity\POI $poi
+     */
+    public function removePoi(\Caribbean\TourismBundle\Entity\POI $poi)
+    {
+        $this->pois->removeElement($poi);
+    }
+
+    /**
+     * Get pois
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPois()
+    {
+        return $this->pois;
     }
 }

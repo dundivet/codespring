@@ -31,7 +31,7 @@ class Rating
     /**
      * @var \Caribbean\SecurityBundle\Entity\Usuario
      *
-     * @ORM\OneToMany(targetEntity="Caribbean\SecurityBundle\Entity\Usuario", mappedBy="")
+     * @ORM\OneToMany(targetEntity="Caribbean\SecurityBundle\Entity\Usuario", mappedBy="rating")
      */
     private $usuario;
 

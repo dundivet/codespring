@@ -95,6 +95,13 @@ class POI
      */
     private $rating;
 
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Caribbean\TourismBundle\Entity\Etiqueta", inversedBy="poi")
+     */
+    private $etiquetas;
+
 
     /**
      * Constructor
@@ -103,6 +110,7 @@ class POI
     {
         $this->comentarios  = new \Doctrine\Common\Collections\ArrayCollection();
         $this->galeria      = new Galeria();
+        $this->etiquetas    = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -353,5 +361,38 @@ class POI
     public function getRating()
     {
         return $this->rating;
+    }
+
+    /**
+     * Add etiqueta
+     *
+     * @param \Caribbean\TourismBundle\Entity\Etiqueta $etiqueta
+     * @return POI
+     */
+    public function addEtiqueta(\Caribbean\TourismBundle\Entity\Etiqueta $etiqueta)
+    {
+        $this->etiquetas[] = $etiqueta;
+
+        return $this;
+    }
+
+    /**
+     * Remove etiqueta
+     *
+     * @param \Caribbean\TourismBundle\Entity\Etiqueta $etiqueta
+     */
+    public function removeEtiqueta(\Caribbean\TourismBundle\Entity\Etiqueta $etiqueta)
+    {
+        $this->etiquetas->removeElement($etiqueta);
+    }
+
+    /**
+     * Get etiquetas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEtiquetas()
+    {
+        return $this->etiquetas;
     }
 }
