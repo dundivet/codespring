@@ -8,6 +8,7 @@
 
 namespace Caribbean\TourismBundle\Command;
 
+use Caribbean\TourismBundle\Entity\POI;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,29 +22,43 @@ class POICommand extends ContainerAwareCommand {
             ->setName('create:poi')
             ->setDescription('Read CSV files and create the POI')
             ->addArgument('file', InputArgument::REQUIRED, 'CSV file with POI description.')
-            ->addArgument('cols', InputArgument::OPTIONAL, 'Columns from CSV file to read.')
+            ->addArgument('index-row', InputArgument::REQUIRED, 'Starting row to read.')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $file = $input->getArgument('file');
+        $indexRow = $input->getArgument('index-row');
+        $columns = array(
+            'A' => 'nombre',
+            'B' => 'direccion',
+            'C' => 'ciudad',
+            'E' => 'latitud',
+            'F' => 'longitud'
+        );
 
         if ($file) {
             $objPHPExcel = $this->read($file);
 
             if ($objPHPExcel) {
-                $objPHPExcel->setActiveSheetIndex(0);
+                $sheet = $objPHPExcel->setActiveSheetIndex(0);
+                $highestRow = $sheet->getHighestRow();
 
-                $count = 2;
-                while(true) {
-                    $value = $objPHPExcel->getActiveSheet()->getCell('A'.$count)->getValue();
-                    $count++;
-                    $output->writeln($value);
-                    if(!$value)
-                        break;
+                for ($i = $indexRow; $i < $highestRow; $i++) {
+                    $poi = new POI();
+                    foreach ($columns as $key => $value) {
+                        $cell = $sheet->getCell($key.$i)->getValue();
+                        $set = sprintf('set%s', ucfirst($value));
+                        $poi->$set($cell);
+                    }
+                    $em->persist($poi);
                 }
+                $em->flush();
+
                 $output->writeln('All POI were created successfully!');
+                return;
             }
         }
 

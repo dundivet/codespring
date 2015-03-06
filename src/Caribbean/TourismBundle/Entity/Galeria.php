@@ -28,6 +28,12 @@ class Galeria
      */
     private $imagenes;
 
+    /**
+     * @var \Caribbean\TourismBundle\Entity\POI
+     *
+     * @ORM\OneToOne(targetEntity="Caribbean\TourismBundle\Entity\POI", mappedBy="galeria")
+     */
+    private $poi;
 
     /**
      * Constructor
@@ -78,5 +84,28 @@ class Galeria
     public function getImagenes()
     {
         return $this->imagenes;
+    }
+
+    /**
+     * Set poi
+     *
+     * @param \Caribbean\TourismBundle\Entity\POI $poi
+     * @return Galeria
+     */
+    public function setPoi(\Caribbean\TourismBundle\Entity\POI $poi = null)
+    {
+        $this->poi = $poi;
+
+        return $this;
+    }
+
+    /**
+     * Get poi
+     *
+     * @return \Caribbean\TourismBundle\Entity\POI 
+     */
+    public function getPoi()
+    {
+        return $this->poi;
     }
 }

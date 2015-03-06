@@ -26,34 +26,35 @@ class POI
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=125)
+     * @Assert\NotBlank
      */
     private $nombre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="text")
+     * @ORM\Column(name="descripcion", type="text", nullable=true)
      */
     private $descripcion;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="direccion", type="string", length=1000)
+     * @ORM\Column(name="direccion", type="string", length=1000, nullable=true)
      */
     private $direccion;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ciudad", type="string", length=50)
+     * @ORM\Column(name="ciudad", type="string", length=50, nullable=true)
      */
     private $ciudad;
 
     /**
      * @var \Caribbean\TourismBundle\Entity\Galeria
      *
-     * @ORM\OneToOne(targetEntity="Caribbean\TourismBundle\Entity\Galeria")
+     * @ORM\OneToOne(targetEntity="Caribbean\TourismBundle\Entity\Galeria", inversedBy="poi", cascade={"persist","remove"})
      */
     private $galeria;
 
@@ -61,6 +62,7 @@ class POI
      * @var string
      *
      * @ORM\Column(name="latitud", type="string", length=15)
+     * @Assert\NotNull
      */
     private $latitud;
 
@@ -68,6 +70,7 @@ class POI
      * @var string
      *
      * @ORM\Column(name="longitud", type="string", length=15)
+     * @Assert\NotNull
      */
     private $longitud;
 
@@ -84,7 +87,8 @@ class POI
      */
     public function __construct()
     {
-        $this->comentarios = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comentarios  = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->galeria      = new Galeria();
     }
 
     /**
