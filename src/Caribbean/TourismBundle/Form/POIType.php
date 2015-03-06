@@ -16,7 +16,13 @@ class POIType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('descripcion')
+            ->add('descripcion', 'textarea', array(
+                'label' => 'Descripción',
+                'required' => false,
+                'attr' => array(
+                    'style' => 'height: 43px; min-width: 100%; max-width: 100%; min-height: 43px; max-height: 150px;',
+                )
+            ))
             ->add('direccion')
             ->add('contacto')
             ->add('ciudad')

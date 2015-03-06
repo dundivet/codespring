@@ -3,11 +3,37 @@
 {% block content -%}
     <h1>Adicionar nuevo Punto de Interés</h1>
 
-
     {{ form_errors(form) }}
-    {{ form(form) }}
+    <form action="{{ form.vars.action }}" method="post" enctype="multipart/form-data">
 
-    <a href="{{ path('poi') }}">
-        Back to the list
-    </a>
+        <div class="row">
+            <div class="col-md-4">
+                {{ form_row(form.nombre) }}
+            </div>
+            <div class="col-md-4">
+                {{ form_row(form.contacto) }}
+            </div>
+            <div class="col-md-4">
+                {{ form_row(form.ciudad) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                {{ form_row(form.descripcion) }}
+            </div>
+            <div class="col-md-2">
+                {{ form_row(form.latitud) }}
+            </div>
+            <div class="col-md-2">
+                {{ form_row(form.longitud) }}
+            </div>
+        </div>
+
+        <div role="group">
+            <button type="submit" class="btn btn-success btn-md"><span class="glyphicon glyphicon-save"></span> Crear</button>
+            <a href="{{ path('poi') }}" class="btn btn-default btn-md"><i class="fa fa-list"></i> Cancelar</a>
+        </div>
+        {{ form_widget(form._token) }}
+    </form>
 {% endblock %}

@@ -1,13 +1,42 @@
 {% extends '::base.html.twig' %}
 
 {% block content -%}
-    <h1>POI edit</h1>
+    <h1>Editar el Punto de Interés</h1>
 
-    {{ form(edit_form) }}
+    {{ form_errors(edit_form) }}
 
+    <form action="{{ edit_form.vars.action }}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_method" value="PUT">
 
-    <a href="{{ path('poi') }}" class="btn btn-primary"> Listado</a>
-    {{ form(delete_form) }}
+        <div class="row">
+            <div class="col-md-4">
+                {{ form_row(edit_form.nombre) }}
+            </div>
+            <div class="col-md-4">
+                {{ form_row(edit_form.contacto) }}
+            </div>
+            <div class="col-md-4">
+                {{ form_row(edit_form.ciudad) }}
+            </div>
+        </div>
 
-</ul>
+        <div class="row">
+            <div class="col-md-8">
+                {{ form_row(edit_form.descripcion) }}
+            </div>
+            <div class="col-md-2">
+                {{ form_row(edit_form.latitud) }}
+            </div>
+            <div class="col-md-2">
+                {{ form_row(edit_form.longitud) }}
+            </div>
+        </div>
+
+        <div role="group">
+            <input type="submit" class="btn btn-success btn-md" value="Guardar">
+            <a href="{{ path('poi') }}" class="btn btn-primary btn-md"><i class="fa fa-list"></i> Listado</a>
+        </div>
+
+        {{ form_widget(edit_form._token)}}
+    </form>
 {% endblock %}
