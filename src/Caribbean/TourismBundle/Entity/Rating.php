@@ -26,7 +26,7 @@ class Rating
      *
      * @ORM\OneToMany(targetEntity="Caribbean\TourismBundle\Entity\POI", mappedBy="rating")
      */
-    private $poi;
+    private $pois;
 
     /**
      * @var \Caribbean\SecurityBundle\Entity\Usuario
@@ -48,7 +48,7 @@ class Rating
      */
     public function __construct()
     {
-        $this->poi = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pois = new \Doctrine\Common\Collections\ArrayCollection();
         $this->usuario = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -86,36 +86,36 @@ class Rating
     }
 
     /**
-     * Add poi
+     * Add pois
      *
-     * @param \Caribbean\TourismBundle\Entity\POI $poi
+     * @param \Caribbean\TourismBundle\Entity\POI $pois
      * @return Rating
      */
-    public function addPoi(\Caribbean\TourismBundle\Entity\POI $poi)
+    public function addPois(\Caribbean\TourismBundle\Entity\POI $pois)
     {
-        $this->poi[] = $poi;
+        $this->pois[] = $pois;
 
         return $this;
     }
 
     /**
-     * Remove poi
+     * Remove pois
      *
-     * @param \Caribbean\TourismBundle\Entity\POI $poi
+     * @param \Caribbean\TourismBundle\Entity\POI $pois
      */
-    public function removePoi(\Caribbean\TourismBundle\Entity\POI $poi)
+    public function removePois(\Caribbean\TourismBundle\Entity\POI $pois)
     {
-        $this->poi->removeElement($poi);
+        $this->pois->removeElement($pois);
     }
 
     /**
-     * Get poi
+     * Get pois
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getPoi()
+    public function getPois()
     {
-        return $this->poi;
+        return $this->pois;
     }
 
     /**

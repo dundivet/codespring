@@ -91,14 +91,14 @@ class POI
     /**
      * @var \Caribbean\TourismBundle\Entity\Rating
      *
-     * @ORM\ManyToOne(targetEntity="Caribbean\TourismBundle\Entity\Rating", inversedBy="poi")
+     * @ORM\ManyToOne(targetEntity="Caribbean\TourismBundle\Entity\Rating", inversedBy="pois")
      */
     private $rating;
 
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Caribbean\TourismBundle\Entity\Etiqueta", inversedBy="poi")
+     * @ORM\ManyToMany(targetEntity="Caribbean\TourismBundle\Entity\Etiqueta", inversedBy="pois")
      */
     private $etiquetas;
 
@@ -108,9 +108,8 @@ class POI
      */
     public function __construct()
     {
-        $this->comentarios  = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->galeria      = new Galeria();
-        $this->etiquetas    = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comentarios = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->etiquetas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -190,6 +189,29 @@ class POI
     public function getDireccion()
     {
         return $this->direccion;
+    }
+
+    /**
+     * Set contacto
+     *
+     * @param string $contacto
+     * @return POI
+     */
+    public function setContacto($contacto)
+    {
+        $this->contacto = $contacto;
+
+        return $this;
+    }
+
+    /**
+     * Get contacto
+     *
+     * @return string 
+     */
+    public function getContacto()
+    {
+        return $this->contacto;
     }
 
     /**
@@ -318,29 +340,6 @@ class POI
     }
 
     /**
-     * Set contacto
-     *
-     * @param string $contacto
-     * @return POI
-     */
-    public function setContacto($contacto)
-    {
-        $this->contacto = $contacto;
-
-        return $this;
-    }
-
-    /**
-     * Get contacto
-     *
-     * @return string 
-     */
-    public function getContacto()
-    {
-        return $this->contacto;
-    }
-
-    /**
      * Set rating
      *
      * @param \Caribbean\TourismBundle\Entity\Rating $rating
@@ -364,26 +363,26 @@ class POI
     }
 
     /**
-     * Add etiqueta
+     * Add etiquetas
      *
-     * @param \Caribbean\TourismBundle\Entity\Etiqueta $etiqueta
+     * @param \Caribbean\TourismBundle\Entity\Etiqueta $etiquetas
      * @return POI
      */
-    public function addEtiqueta(\Caribbean\TourismBundle\Entity\Etiqueta $etiqueta)
+    public function addEtiqueta(\Caribbean\TourismBundle\Entity\Etiqueta $etiquetas)
     {
-        $this->etiquetas[] = $etiqueta;
+        $this->etiquetas[] = $etiquetas;
 
         return $this;
     }
 
     /**
-     * Remove etiqueta
+     * Remove etiquetas
      *
-     * @param \Caribbean\TourismBundle\Entity\Etiqueta $etiqueta
+     * @param \Caribbean\TourismBundle\Entity\Etiqueta $etiquetas
      */
-    public function removeEtiqueta(\Caribbean\TourismBundle\Entity\Etiqueta $etiqueta)
+    public function removeEtiqueta(\Caribbean\TourismBundle\Entity\Etiqueta $etiquetas)
     {
-        $this->etiquetas->removeElement($etiqueta);
+        $this->etiquetas->removeElement($etiquetas);
     }
 
     /**

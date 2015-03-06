@@ -31,7 +31,7 @@ class Etiqueta
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Caribbean\TourismBundle\Entity\POI", mappedBy="etiqueta")
+     * @ORM\ManyToMany(targetEntity="Caribbean\TourismBundle\Entity\POI", mappedBy="etiquetas")
      */
     private $pois;
 
@@ -78,26 +78,26 @@ class Etiqueta
     }
 
     /**
-     * Add poi
+     * Add pois
      *
-     * @param \Caribbean\TourismBundle\Entity\POI $poi
+     * @param \Caribbean\TourismBundle\Entity\POI $pois
      * @return Etiqueta
      */
-    public function addPoi(\Caribbean\TourismBundle\Entity\POI $poi)
+    public function addPois(\Caribbean\TourismBundle\Entity\POI $pois)
     {
-        $this->pois[] = $poi;
+        $this->pois[] = $pois;
 
         return $this;
     }
 
     /**
-     * Remove poi
+     * Remove pois
      *
-     * @param \Caribbean\TourismBundle\Entity\POI $poi
+     * @param \Caribbean\TourismBundle\Entity\POI $pois
      */
-    public function removePoi(\Caribbean\TourismBundle\Entity\POI $poi)
+    public function removePois(\Caribbean\TourismBundle\Entity\POI $pois)
     {
-        $this->pois->removeElement($poi);
+        $this->pois->removeElement($pois);
     }
 
     /**

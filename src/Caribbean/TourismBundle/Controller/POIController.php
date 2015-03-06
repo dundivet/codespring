@@ -25,15 +25,25 @@ class POIController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('TourismBundle:POI')->findAll();
+        $qb = $this->get('doctrine.orm.entity_manager')->createQueryBuilder();
 
-        return array(
-            'entities' => $entities,
+        $entities = $qb->select('d')
+            ->from('TourismBundle:POI', 'd');
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $entities,
+            $request->query->get('page', 1),
+            10
         );
+
+        return  $this->render('@Tourism/POI/index.html.twig', array(
+            'entities' => $pagination
+        ));
     }
     /**
      * Creates a new POI entity.
@@ -240,7 +250,7 @@ class POIController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('poi_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Eliminar'))
             ->getForm()
         ;
     }

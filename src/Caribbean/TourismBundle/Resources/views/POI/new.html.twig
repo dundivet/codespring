@@ -1,15 +1,13 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
-    <h1>POI creation</h1>
+{% block content -%}
+    <h1>Adicionar nuevo Punto de Interés</h1>
 
+
+    {{ form_errors(form) }}
     {{ form(form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('poi') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    <a href="{{ path('poi') }}">
+        Back to the list
+    </a>
 {% endblock %}

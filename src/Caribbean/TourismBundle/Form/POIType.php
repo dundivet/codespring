@@ -22,7 +22,6 @@ class POIType extends AbstractType
             ->add('ciudad')
             ->add('latitud')
             ->add('longitud')
-            ->add('galeria')
             ->add('rating')
             ->add('etiquetas')
         ;

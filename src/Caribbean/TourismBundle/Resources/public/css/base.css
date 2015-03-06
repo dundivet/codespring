@@ -1,0 +1,15 @@
+
+thead th a {
+    color: #000000;
+    text-decoration: none;
+}
+
+.action {
+    min-width: 15%;
+    text-align: center;
+}
+
+td.action .btn {
+    width: 75px;
+    height: 28px;
+}
