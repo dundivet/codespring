@@ -31,9 +31,9 @@ class Imagen
     /**
      * @var
      *
-     * @ORM\ManyToOne(targetEntity="Caribbean\TourismBundle\Entity\Galeria", inversedBy="imagenes")
+     * @ORM\ManyToOne(targetEntity="Caribbean\TourismBundle\Entity\POI", inversedBy="galeria")
      */
-    private $galeria;
+    private $poi;
 
 
 
@@ -71,25 +71,25 @@ class Imagen
     }
 
     /**
-     * Set galeria
+     * Set poi
      *
-     * @param \Caribbean\TourismBundle\Entity\Galeria $galeria
+     * @param \Caribbean\TourismBundle\Entity\POI $poi
      * @return Imagen
      */
-    public function setGaleria(\Caribbean\TourismBundle\Entity\Galeria $galeria = null)
+    public function setPoi(\Caribbean\TourismBundle\Entity\POI $poi = null)
     {
-        $this->galeria = $galeria;
+        $this->poi = $poi;
 
         return $this;
     }
 
     /**
-     * Get galeria
+     * Get poi
      *
-     * @return \Caribbean\TourismBundle\Entity\Galeria 
+     * @return \Caribbean\TourismBundle\Entity\POI 
      */
-    public function getGaleria()
+    public function getPoi()
     {
-        return $this->galeria;
+        return $this->poi;
     }
 }

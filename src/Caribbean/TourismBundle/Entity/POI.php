@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * POI
  *
  * @ORM\Table(name="d_poi")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Caribbean\TourismBundle\Entity\Repository\POIRepository")
  */
 class POI
 {
@@ -59,9 +59,9 @@ class POI
     private $ciudad;
 
     /**
-     * @var \Caribbean\TourismBundle\Entity\Galeria
+     * @var \Caribbean\TourismBundle\Entity\Imagen
      *
-     * @ORM\OneToOne(targetEntity="Caribbean\TourismBundle\Entity\Galeria", inversedBy="poi", cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="Caribbean\TourismBundle\Entity\Imagen", mappedBy="poi", cascade={"persist","remove"})
      */
     private $galeria;
 
@@ -110,6 +110,7 @@ class POI
     {
         $this->comentarios = new \Doctrine\Common\Collections\ArrayCollection();
         $this->etiquetas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->galeria      = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString()
@@ -289,29 +290,6 @@ class POI
     }
 
     /**
-     * Set galeria
-     *
-     * @param \Caribbean\TourismBundle\Entity\Galeria $galeria
-     * @return POI
-     */
-    public function setGaleria(\Caribbean\TourismBundle\Entity\Galeria $galeria = null)
-    {
-        $this->galeria = $galeria;
-
-        return $this;
-    }
-
-    /**
-     * Get galeria
-     *
-     * @return \Caribbean\TourismBundle\Entity\Galeria 
-     */
-    public function getGaleria()
-    {
-        return $this->galeria;
-    }
-
-    /**
      * Add comentarios
      *
      * @param \Caribbean\TourismBundle\Entity\Comentario $comentarios
@@ -398,5 +376,42 @@ class POI
     public function getEtiquetas()
     {
         return $this->etiquetas;
+    }
+
+    /**
+     * Add galeria
+     *
+     * @param \Caribbean\TourismBundle\Entity\Imagen $galeria
+     * @return POI
+     */
+    public function addGalerium(\Caribbean\TourismBundle\Entity\Imagen $galeria)
+    {
+        $galeria->setPoi($this);
+
+        $this->galeria[] = $galeria;
+
+        return $this;
+    }
+
+    /**
+     * Remove galeria
+     *
+     * @param \Caribbean\TourismBundle\Entity\Imagen $galeria
+     */
+    public function removeGalerium(\Caribbean\TourismBundle\Entity\Imagen $galeria)
+    {
+        $galeria->setPoi(null);
+
+        $this->galeria->removeElement($galeria);
+    }
+
+    /**
+     * Get galeria
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGaleria()
+    {
+        return $this->galeria;
     }
 }
